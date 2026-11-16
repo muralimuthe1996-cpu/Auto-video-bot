@@ -23,3 +23,10 @@ jobs:
 
       - name: Run Automation Script
         run: python main.py
+
+              - name: Upload Generated Video
+        uses: actions/upload-artifact@v4
+        with:
+          name: loot-video
+          path: loot_reel.mp4
+
