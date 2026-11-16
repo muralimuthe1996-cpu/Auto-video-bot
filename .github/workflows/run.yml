@@ -1,0 +1,29 @@
+name: Automated AI Video Bot
+
+on:
+  schedule:
+    - cron: '0 6,12 * * *' # रोज सकाळी ११:३० आणि संध्याकाळी ५:३० वाजता आपोआप चालेल
+  workflow_dispatch: # तुम्हाला स्वतः बटण दाबून रन करण्याचा पर्याय मिळेल
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install google-generativeai opencv-python-headless pillow beautifulsoup4 requests
+
+      - name: Run Automation Script
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
