@@ -2,25 +2,15 @@ import os
 import requests
 import cv2
 import numpy as np
-import google.generativeai as genai
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw
 
-# गिटहबच्या सुरक्षित कपाटातून आणि सिस्टीममधून माहिती मिळवणे
 BOT_TOKEN = "9147677022:AAGt5aDzpcyRA8X7Q49io8Op190eMl-FmFs"
 CHAT_ID = "1237528257"
-GEMINI_KEY = os.environ.get("GEMINI_API_KEY")
-
-if GEMINI_KEY:
-    try:
-        genai.configure(api_key=GEMINI_KEY)
-    except:
-        pass
 
 def get_automated_deal():
-    # फ्लिपकार्टच्या मुख्य टी-शर्ट आणि फॅशन हबवरून चालू ऑफर्स ट्रॅक करणे
     url = "https://flipkart.com"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     try:
         res = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(res.content, 'html.parser')
@@ -71,7 +61,6 @@ def make_and_send_video():
     video.release()
     print("🚀 व्हिडिओ तयार झाला आहे! टेलिग्रामवर पाठवत आहे...")
     
-    # ✅ अधिकृत टेलिग्राम API ची अचूक लिंक दुरुस्त केली आहे
     try:
         video_file = open('loot_reel.mp4', 'rb')
         telegram_url = f"https://telegram.org{BOT_TOKEN}/sendVideo"
@@ -84,4 +73,3 @@ def make_and_send_video():
 
 if __name__ == "__main__":
     make_and_send_video()
-
